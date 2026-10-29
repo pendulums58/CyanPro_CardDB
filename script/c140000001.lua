@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetCountLimit(1,id+800)
 	e2:SetCondition(s.descon)
-	cyan.JustSearch(e2,LOCATION_DECK,Card.IsSetCard,SETCARD_MARCHINGFIRE,Card.IsNotCode,id,Card,IsType,TYPE_MONSTER)	
+	cyan.JustSearch(e2,LOCATION_DECK+LOCATION_GRAVE,Card.IsSetCard,SETCARD_MARCHINGFIRE,Card.IsNotCode,id,Card.IsType,TYPE_MONSTER)	
 	c:RegisterEffect(e2)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 	e1:SetValue(ATTRIBUTE_FIRE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetTargetRange(LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE)
+	e1:SetTargetRange(LOCATION_ONFIELD,LOCATION_ONFIELD)
 	c:RegisterEffect(e1)	
 	--마함 효과 변경
 	local e2=Effect.CreateEffect(c)
