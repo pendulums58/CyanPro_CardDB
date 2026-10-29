@@ -35,6 +35,9 @@ end
 function s.filter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
 end
+function s.descon(e,tp,eg,ep,ev,re,r,rp)
+	return (e:GetHandler():GetReason()&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT)
+end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsLocation(LOCATION_GRAVE) and c:IsAbleToHand() end
