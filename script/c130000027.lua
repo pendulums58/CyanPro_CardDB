@@ -25,7 +25,7 @@ function s.dfilter(c,e,tp)
 end
 function s.spfilter(c,e,tp,tc)
 	local tcc=Duel.ReadCard(tc,CARDDATA_SETCODE)
-	return c:IsSetCardList(tcc) and c:IsAttack(tc:GetAttack()) and c:IsDefense(tc:GetDefense())
+	return c:IsSetCardList(tc) and c:IsAttack(tc:GetAttack()) and c:IsDefense(tc:GetDefense())
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(tc:GetCode())
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
