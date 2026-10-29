@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetCountLimit(1,id+800)
 	e2:SetCondition(s.descon)
-	cyan.JustSearch(e2,LOCATION_DECK+LOCATION_GRAVE,Card.IsSetCard,SETCARD_MARCHINGFIRE,Card.IsNotCode,id,Card.IsType,TYPE_MONSTER)	
+	cyan.JustSearch(e2,LOCATION_DECK,Card.IsSetCard,SETCARD_MARCHINGFIRE,Card.IsNotCode,id,Card.IsType,TYPE_MONSTER)	
 	c:RegisterEffect(e2)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -38,7 +38,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		if Duel.Destroy(tc,REASON_EFFECT)~=0 then
-			Duel.Damage(p,d,REASON_EFFECT)
+			Duel.Damage(1-tp,1000,REASON_EFFECT)
 		end
 	end
 end
