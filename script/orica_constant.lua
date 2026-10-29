@@ -7,22 +7,12 @@
 
 -- 제작자 : 시안색새벽 --
 -- ■ 의식
-SETCARD_FOREGONE=0x625	-- 한정해제
-SETCARD_FOREGONER=0x1625 -- 한정해제자
-SETCARD_FLOWERHILL=0x657 -- 플라워힐
-SETCARD_RADIANT=0x65c --라디언트
 
 -- ■ 융합
-SETCARD_HIGHTIDE=0x60c -- 하이타이드
-SETCARD_PARAREAL=0x61e	-- 패러리얼
 
 -- ■ 싱크로
-SETCARD_STARSNOW=0x60f -- 성설
-SETCARD_TALETAMER=0x619	-- 테일테이머
-SETCARD_BST=0x62b	-- BST
-SETCARD_SKYWALKER=0xef5	-- 스카이워커
-SETCARD_SINKLOST=0xef8	-- 싱크로스트
-SETCARD_LRM=0x655	-- LRM(레벨 레볼루션 매직)
+SETCARD_SKYWALKER=0x302	-- 스카이워커
+SETCARD_LRM=0x304	-- LRM(레벨 레볼루션 매직)
 
 -- ■ 엑시즈
 SETCARD_RAIMEI=0x62d	-- 뇌명
