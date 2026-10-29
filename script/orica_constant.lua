@@ -133,7 +133,7 @@ SETCARD_OZ=0xac5	-- OZ
 SETCARD_SKY=0xad1	-- 천공
 
 -- ■ 엑시즈
-SETCARD_MARCHINGFIRE=0xac6	-- 마칭 파이어
+SETCARD_MARCHINGFIRE=0x300	-- 마칭 파이어
 SETCARD_DA=0xad2	-- 델타 아스널
 
 -- ■ 펜듈럼
