@@ -40,9 +40,7 @@ function cyan.UnlockOperation(code)
 	return function(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
 		local c=e:GetHandler()
-		Debug.Message("KEY UNLOCK: before="..c:GetCode())
 		c:Recreate(code, nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil, true)
-		Debug.Message("KEY UNLOCK: after="..c:GetCode())
 		if Duel.SpecialSummon(c,SUMMON_TYPE_UNLOCK,tp,tp,false,false,POS_FACEUP)~=0 then
 			Duel.RaiseSingleEvent(c,EVENT_KEY_UNLOCKED,e,0,tp,tp,0)
 			Duel.RaiseEvent(c,EVENT_KEY_UNLOCKED,e,0,tp,tp,0)
