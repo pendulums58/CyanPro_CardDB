@@ -27,7 +27,7 @@ function s.filter1(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,rk+3,c:GetAttribute(),c:GetRace())
 end
 function s.filter2(c,e,tp,mc,rk,att,rc)
-	return c:GetLevel()==rk and c:IsSetCard(ATTRIBUTE_LIGHT+ATTRIBUTE_WIND) and mc:IsCanBeSynchroMaterial(c)
+	return c:GetLevel()==rk and mc:IsCanBeSynchroMaterial(c)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false) and c:IsAttribute(att) and c:IsRace(rc)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -68,7 +68,7 @@ function s.filter3(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.filter4,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,rk+2,c:GetAttribute(),c:GetRace())
 end
 function s.filter4(c,e,tp,mc,rk,att,rc)
-	return c:GetLevel()==rk and c:IsSetCard(ATTRIBUTE_LIGHT+ATTRIBUTE_WIND) and mc:IsCanBeSynchroMaterial(c)
+	return c:GetLevel()==rk and mc:IsCanBeSynchroMaterial(c)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false) and c:IsAttribute(att) and c:IsRace(rc)
 end
 function s.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
