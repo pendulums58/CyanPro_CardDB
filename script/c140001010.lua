@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCondition(cyan.SynSSCon)
-	cyan.JustSearch(e1,LOCATION_DECK,Card.IsSetCard,SETCARD_LRM,Card.IsType,TYPE_SPELL)
+	cyan.JustSearch(e1,LOCATION_DECK,Card.IsSetCard,SETCARD_SKYWALKER,Card.IsType,TYPE_MONSTER)
 	c:RegisterEffect(e1)
 	--묘지 회수
 	local e2=Effect.CreateEffect(c)
