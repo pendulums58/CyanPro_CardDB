@@ -1,16 +1,17 @@
 --마칭 파이어 라미크
 local s,id=GetID()
 function s.initial_effect(c)
-	--데미지
+	--spsummon
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
-	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetCountLimit(1,id)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetTarget(s.destg)
-	e1:SetOperation(s.desop)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e1:SetRange(LOCATION_HAND)
+	e1:SetCode(EVENT_TO_GRAVE)
+	e1:SetCountLimit(1,id)
+	e1:SetCondition(s.condition)
+	e1:SetTarget(s.target)
+	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 	--마칭 파이어 서치
 	local e2=Effect.CreateEffect(c)
@@ -23,24 +24,21 @@ function s.initial_effect(c)
 	cyan.JustSearch(e2,LOCATION_DECK,Card.IsSetCard,SETCARD_MARCHINGFIRE,Card.IsNotCode,id,Card.IsType,TYPE_MONSTER)	
 	c:RegisterEffect(e2)
 end
-function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsOnField() and chkc:IsFaceup() and chkc:IsSetCard(SETCARD_MARCHINGFIRE) end
-	if chk==0 then return Duel.IsExistingTarget(s.desfilter,tp,LOCATION_ONFIELD,0,1,nil) end
-	local g=Duel.SelectTarget(tp,s.desfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1000)	
+function s.cfilter(c,tp)
+	return c:IsMonster() and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and (c:GetPreviousAttributeOnField()&ATTRIBUTE_FIRE)~=0
 end
-function s.desfilter(c)
-	return c:IsSetCard(SETCARD_MARCHINGFIRE) and c:IsFaceup()
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.cfilter,1,nil,tp) and (r&REASON_DESTROY)~=0
 end
-function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
-		if Duel.Destroy(tc,REASON_EFFECT)~=0 then
-			Duel.Damage(1-tp,1000,REASON_EFFECT)
-		end
-	end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+end
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
+	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

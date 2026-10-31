@@ -12,12 +12,13 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_ONFIELD,LOCATION_ONFIELD)
 	c:RegisterEffect(e1)	
-	--마함 효과 변경
+	--필드의 카드를 1장 파괴한다
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCode(EVENT_CHAINING)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetCode(EVENT_DAMAGE)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.condition)
 	e2:SetRange(LOCATION_MZONE)
@@ -32,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetCondition(function(_,tp) return Duel.GetFlagEffect(tp,id)>0 end)
 	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetTarget(function(_,c) return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsMonster() and c:IsFaceup() and c:IsLocation(LOCATION_MZONE) end)
+	e3:SetTarget(function(_,c) return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsMonster() and c:IsFaceup() end)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
 	aux.GlobalCheck(s,function()
@@ -44,23 +45,21 @@ function s.initial_effect(c)
 	end)	
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and re:IsActiveType(TYPE_SPELL|TYPE_TRAP) and Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_MZONE,1,nil)
+	return r&REASON_EFFECT~=0 and ep~=tp
 end
 function s.desfilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_FIRE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp) end
+	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeTargetCard(ev,g)
-	Duel.ChangeChainOperation(ev,s.repop)
-end
-function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_CARD,1-tp,id)
-	local g=Duel.SelectMatchingCard(1-tp,s.desfilter,tp,0,LOCATION_MZONE,1,1,nil)
-	if #g>0 then
-		Duel.Destroy(g,REASON_EFFECT)
+	local c=e:GetHandler()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local dg=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,tp)
+	if #dg>0 then Duel.Destroy(dg,REASON_EFFECT)>0
 	end
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
