@@ -15,8 +15,8 @@ function c140000010.initial_effect(c)
 end
 function s.desfilter(c,e,tp)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_FIRE) 
-	and (Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_MZONE,0,1,c,e,tp,c,c:GetRank()+1) or Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
-end
+	and (Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_MZONE,0,1,c,e,tp,c,c:GetRank()+1) or Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil)) 
+	end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) end
 	if chk==0 then return Duel.IsExistingTarget(s.desfilter,tp,LOCATION_MZONE,0,1,nil,e,tp) end
