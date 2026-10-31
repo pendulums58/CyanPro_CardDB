@@ -59,7 +59,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local dg=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,tp)
-	if #dg>0 then Duel.Destroy(dg,REASON_EFFECT)>0
+	if #dg>0 then 
+	Duel.Destroy(dg,REASON_EFFECT)
 	end
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
