@@ -27,8 +27,10 @@ function s.initial_effect(c)
 	--소재 제거(스탠바이 페이즈)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e4:SetRange(LOCATION_MZONE)
 	e4:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e4:SetCountLimit(1)
+	e4:SetCondition(s.sbcon)
 	e4:SetOperation(s.desop3)
 	c:RegisterEffect(e4)
 	--효과 완전 내성
@@ -51,6 +53,9 @@ function s.initial_effect(c)
 	e6:SetOperation(s.xop)
 	c:RegisterEffect(e6)
 end
+function s.sbcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()==tp
+end
 function s.desop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsLocation(LOCATION_MZONE) and c:IsFaceup() then
@@ -65,7 +70,7 @@ function s.desop2(e,tp,eg,ep,ev,re,r,rp)
 			e:GetLabelObject():SetLabel(1)
 		else
 			if c:IsHasEffect(EFFECT_DISABLE) then return end
-			if not c:IsDisabled() then 
+			if not c:IsDisabled() then
 				if e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) then
 					e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 				else
@@ -76,9 +81,9 @@ function s.desop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.desop3(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()		
+	local c=e:GetHandler()
 	if c:IsHasEffect(EFFECT_DISABLE) then return end
-	if not c:IsDisabled() then 
+	if not c:IsDisabled() then
 		if e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) then
 			e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 		else
@@ -92,11 +97,13 @@ end
 function s.xtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsType(TYPE_XYZ) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup()
 		and chkc~=e:GetHandler() end
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
-	local tc=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,e:GetHandler())
-	if tc:GetOverlayGroupCount()==0 then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,tp,LOCATION_MZONE)
+	if chk==0 then return Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	local g=Duel.SelectTarget(tp,s.tgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,e:GetHandler())
+	local tc=g:GetFirst()
+	if tc:GetOverlayCount()==0 then
 		e:SetCategory(CATEGORY_DESTROY)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,tp,LOCATION_MZONE)
 	else
 		e:SetCategory(0)
 	end
@@ -106,13 +113,15 @@ function s.tgfilter(c)
 end
 function s.xop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		local xg=tc:GetOverlayGroup()
 		if xg:GetCount()>0 then
-			xg=xg:Select(tp,1,1,nil)
-			Duel.Overlay(e:GetHandler(),xg)
+			if e:GetHandler():IsRelateToEffect(e) then
+				xg=xg:Select(tp,1,1,nil)
+				Duel.Overlay(e:GetHandler(),xg)
+			end
 		else
-			Duel.Destroy(tc,REASON_EFFECt)
+			Duel.Destroy(tc,REASON_EFFECT)
 		end
 	end
 end

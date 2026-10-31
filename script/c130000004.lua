@@ -36,7 +36,7 @@ function s.comptg(e,tp,ep,eg,ev,re,r,rp,chk)
 		and Duel.GetTurnCount()==1 end
 end
 function s.cpfilter(c)
-	return not c:IsRace(RACE_BEAST+RACE_WINGBEAST+RACE_INSECT+RACE_DINOSAUR+RACE_FISH)
+	return c:IsType(TYPE_MONSTER) and not c:IsRace(RACE_BEAST+RACE_WINGBEAST+RACE_INSECT+RACE_DINOSAUR+RACE_FISH)
 end
 
 function s.compop(e,tp,ep,eg,ev,re,r,rp)

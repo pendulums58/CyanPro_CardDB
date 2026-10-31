@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetTarget(s.filter)
 	e2:SetValue(1)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 end
 function s.afil1(c)
 	return true
@@ -47,16 +47,16 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		if Duel.Destroy(tc,POS_FACEUP,REASON_EFFECT)==0 then
+	if tc and tc:IsRelateToEffect(e) then
+		if Duel.Destroy(tc,REASON_EFFECT)==0 then
 			Duel.Damage(1-tp,800,REASON_EFFECT)
 			if Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)==0 then
 				local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
 				if g:GetCount()>0 then
 					local sg=g:RandomSelect(1-tp,1)
 					Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
-					Duel.SendtoGrave(tc,REASON_EFFECT)
 				end
+				Duel.SendtoGrave(tc,REASON_EFFECT)
 			end
 		end
 	end

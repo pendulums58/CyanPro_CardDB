@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--링크 소환
-	aux.AddLinkProcedure(c,nil,2,99,s.lcheck)
+	Link.AddProcedure(c,nil,2,99,s.lcheck)
 	c:EnableReviveLimit()
 	--소환 성공시 링크 변경
 	local e1=Effect.CreateEffect(c)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.con)
 	e2:SetValue(3)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 	--튜너 특수 소환
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -35,11 +35,12 @@ function s.lcheck(g,lc)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) or not c:IsFaceup() then return end
 	local lm=c:GetLinkMarker()
 	if lm==0x007 then
-		c:SetCardData(CARDDATA_LINK_MARKER,0x0a8)
+		c:LinkMarker(0x0a8)
 	else
-		c:SetCardData(CARDDATA_LINK_MARKER,0x007)
+		c:LinkMarker(0x007)
 	end
 end
 function s.con(e)
@@ -66,7 +67,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTargetRange(1,0)
 		e1:SetTarget(s.splimit)
 		e1:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e1,tp)		
+		Duel.RegisterEffect(e1,tp)
 	end
 end
 function s.splimit(e,c,tp,sumtp,sumpos)

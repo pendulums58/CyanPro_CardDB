@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--개방 영속 효과
-	cyan.SetUnlockedEffect(c,s.unlockeff)	
+	cyan.SetUnlockedEffect(c,s.unlockeff)
 	--개방시 소생 효과
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -46,29 +46,20 @@ function s.unlockeff(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e3:SetCode(EFFECT_CHANGE_DAMAGE)
-	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(1,0)
 	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e3:SetValue(s.damval2)
 	Duel.RegisterEffect(e3,tp)
-	local e4=e3:Clone()
-	e4:SetCode(EFFECT_NO_EFFECT_DAMAGE)
-	e4:SetCondition(s.damcon)
-	Duel.RegisterEffect(e4,tp)
 end
 function s.damval2(e,re,val,r,rp,rc)
-	local c=e:GetHandler()
-	if c:GetFlagEffect(id)==0 then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	local tp=e:GetHandlerPlayer()
+	if val>0 and Duel.GetFlagEffect(tp,id)==0 then
+		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 		return 0
 	end
 	return val
-end
-function s.damcon(e)
-	return e:GetHandler():GetFlagEffect(id)==0
 end
 function s.indval(e,c)
 	return not c:IsType(TYPE_KEY)

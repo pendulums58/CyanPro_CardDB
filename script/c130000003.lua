@@ -26,10 +26,10 @@ function s.initial_effect(c)
 end
 function s.comptg(e,tp,ep,eg,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,COMPANION_COMPLETE)
-		and not Duel.IsExistingMatchingCard(s.cpfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil)
+		and not Duel.IsExistingMatchingCard(s.cpfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,tp)
 		and Duel.GetTurnCount()==1 end
 end
-function s.cpfilter(c)
+function s.cpfilter(c,tp)
 	return Duel.IsExistingMatchingCard(s.smfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,c)
 end
 function s.smfilter(c,tc)

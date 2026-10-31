@@ -10,27 +10,34 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetTarget(s.tg)
 	e1:SetOperation(s.op)
 	e1:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
 	c:RegisterEffect(e1)
 end
+function s.dfilter(c)
+	return c:IsFaceup() and c:IsDefenseBelow(1600)
+end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsFaceup() and chkc:GetDefense()<=1600 end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.dfilter(chkc) end
 	if chk==0 then return true end
-	if Duel.IsExistingTarget(Card.IsDefenseBelow,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,1600) 
+	if Duel.IsExistingTarget(s.dfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		e:SetCategory(CATEGORY_RECOVER+CATEGORY_DESTROY)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_NO_TURN_RESET)
 		e:SetOperation(s.desop)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		local g=Duel.SelectTarget(tp,Card.IsDefenseBelow,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,1600)
+		local g=Duel.SelectTarget(tp,s.dfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,800)
 	else
 		e:SetCategory(CATEGORY_RECOVER+CATEGORY_DAMAGE)
 		e:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_NO_TURN_RESET)
+		e:SetOperation(s.op)
 		Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,800)
+		Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,800)
 	end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)

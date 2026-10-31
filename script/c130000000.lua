@@ -46,10 +46,11 @@ function s.compop(e,tp,ep,eg,ev,re,r,rp)
 		end
 	end
 end
-function s.spcon(e,tp,ep,eg,ev,re,r,rp)
-	return eg:IsExists(s.tgfilter,1,nil,tp) and ep==1-tp and not c:IsStatus(STATUS_CHAINING)
+function s.spcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return eg:IsExists(s.tgfilter,1,nil,tp) and rp==1-tp and not c:IsStatus(STATUS_CHAINING)
 end
-function s.tgfilter(c)
+function s.tgfilter(c,tp)
 	return c:IsLocation(LOCATION_ONFIELD) and c:IsControler(tp)
 end
 function s.sptg(e,tp,ep,eg,ev,re,r,rp,chk)

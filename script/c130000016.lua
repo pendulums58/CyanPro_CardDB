@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetTargetRange(0,1)
-	c:RegisterEffect(e3)	
+	c:RegisterEffect(e3)
 end
 function s.afil1(c)
 	return c:GetLevel()==1
@@ -63,8 +63,8 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 function s.condition(e)
-	local c=e:GetHandler()
-	return c:GetAdmin():GetLevel()==1
+	local adm=e:GetHandler():GetAdmin()
+	return adm~=nil and adm:GetLevel()==1
 end
 function s.cfilter1(c)
 	return c:IsType(TYPE_ACCESS+TYPE_LINK) and c:IsAbleToRemoveAsCost()
