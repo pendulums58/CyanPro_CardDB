@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--싱크로 소환
-	aux.AddSynchroProcedure(c,nil,aux.NonTuner(Card.IsRace,RACE_THUNDER),1)
+	aux.AddSynchroProcedure(c,nil,nil,1)
 	c:EnableReviveLimit()
 	--①: 필드의 다른 카드 1장 대상 바운스 + LRM 추가 드로우
 	local e1=Effect.CreateEffect(c)
