@@ -33,7 +33,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		local atk=tc:GetBaseAttack()
 		Duel.Damage(1-tp,atk,REASON_EFFECT)
 		if tc:IsSetCard(SETCARD_MARCHINGFIRE) then
-			local g=Duel.SelectMatchingCard(tp,aux.TRUE,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+			local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 			if #g>0 then
 				Duel.Destroy(g,REASON_EFFECT)
 			end
