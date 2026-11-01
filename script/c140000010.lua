@@ -25,7 +25,7 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 end
 function s.spfilter(c,e,tp,mc,rn)
-	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsXyzSummonable() and c:IsRank(rn)
+	return c:IsAttribute(ATTRIBUTE_FIRE) and mc:IsCanBeXyzMaterial(c,tp) and c:IsRank(rn)
 end
 function s.tgfilter(c)
 	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsMonster() and c:IsAbleToGrave()
