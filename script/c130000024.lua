@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--링크 소환
-	Link.AddProcedure(c,nil,2,99,s.lcheck)
+	Link.AddProcedure(c,aux.TRUE,2,99,s.lcheck)
 	c:EnableReviveLimit()
 	--소환 성공시 링크 변경
 	local e1=Effect.CreateEffect(c)
