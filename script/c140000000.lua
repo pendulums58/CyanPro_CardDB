@@ -1,7 +1,7 @@
 --마칭 파이어 카이네
 local s,id=GetID()
 function s.initial_effect(c)
-	--summon to backfire
+	--summon to backfire_fire_fire_fire
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
