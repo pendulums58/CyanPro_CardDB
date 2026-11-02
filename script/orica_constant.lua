@@ -17,7 +17,7 @@ SETCARD_LRM=0x304	-- LRM(레벨 레볼루션 매직)
 -- ■ 엑시즈
 SETCARD_RAIMEI=0x62d	-- 뇌명
 SETCARD_STARGEAR=0x648	-- 스타기어
-SETCARD_STORYTELLER=0x64a	-- 스토리텔러
+SETCARD_STORYTELLER=0x308	-- 스토리텔러
 SETCARD_IMAGECALCELER=0xefa	-- 직시자
 
 -- ■ 펜듈럼

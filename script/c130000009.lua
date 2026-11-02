@@ -27,7 +27,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.cfilter(c,tp)
 	return c:IsType(TYPE_MONSTER) and (c:IsAttack(1400) or c:IsDefense(1400)) and c:IsAbleToRemoveAsCost()
-		and Duel.GetLocationCount(tp,LOCATION_MZONE,c)>0
+		and Duel.GetLocationCount(tp,c)>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
@@ -40,8 +40,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_GRAVE,0,3,nil) end
-	local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_GRAVE,0,3,3,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_GRAVE,0,2,nil) end
+	local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_GRAVE,0,2,2,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
@@ -53,26 +53,15 @@ function s.purchase(tp,chk)
 	--카드 등급은 커먼, 언커먼, 레어로 구분하여 각 등급별 확률 적용
 	
 	-- 커먼 등급 카드
-	-- 오리카
-	-- 범용 태그에서 : 강건한 수호의 적수, 점적천석의 저항자, 오더메이드 워블러, 뱀부스피어 제너럴
-	local common={101223078,101223134,101223168,101223186,101223228,67169062,85852291,67616300,80036543,9064354}
+	-- 범용 태그에서 : 오더메이드 워블러, 뱀부스피어 제너럴, 태양의 눈물, 정성스러운 빙정화, 엔비오스 단검, 비 갠 후의 하늘에, 슬픔에 잠긴 시스투스, CMY 부적 세트 
+	local common={130000008,130000006,130000033,130000034,130000035,130000029,130100000,130000030,130000031,130000032}
 	-- 언커먼 등급 카드
-	-- 비오리카
-	-- 패트랩 : 하루 우라라, 증식의 G, 유령토끼, 저택 와라시, 이펙트 뵐러, 무한포영
-	-- 케어 카드 : 무덤의 지명자, 말살의 지명자
-	-- 강력 범용 마법 : 죽은 자의 소생, 번개, 해피의 깃털
-	-- 엑스트라 덱 몬스터 : 
-	-- 오리카
-	-- 패트랩 : 영원 커넥터, 소원 어센더, 마나 페네트레이터
-	-- 케어 카드 : 전생의 유언
-	local uncommon={14558129,23434538,59438932,73642298,97268402,10045474,24224830,65681983,83764718,12580477,18144506,101223222,101223223,101223139}
+	-- 디스턴스 메이커, 전생의 유언, 마음을 굳힌 미스틸테인, 
+	local uncommon={130000005,130000025,130100001}
 	
 	-- 레어 등급 카드
-	-- 오리카
-	-- 상위 패트랩 : 드림 오브 크리스탈
-	-- 비오리카
-	-- 금지 카드 : 대 한파, 댄디라이언, 이차원으로부터의 귀환, 허리케인
-	local rare={101223183,60682203,15341821,27174286,42703248}
+	-- 영원의 빛 조각, 거성의 분노, 수도
+	local rare={130000037,130000038,130000039}
 	-- 커먼 확률 60%, 언커먼 확률 30%, 레어 확률 10%
 	local goods=Group.CreateGroup()
 	local rarity=0
@@ -109,18 +98,18 @@ function s.purchase(tp,chk)
 		end
 	end
 	if chk==true then
-		local reroll=Duel.CreateToken(tp,101223247)
+		local reroll=Duel.CreateToken(tp,130000036)
 		goods:AddCard(reroll)
 	end
 	if maxrare == 3 then
-		local a = Duel.SelectOption(tp,aux.Stringid(id,0))
+		local a = Duel.SelectOption(tp,aux.Stringid(id,3))
 	elseif maxrare == 2 then
 		local a = Duel.SelectOption(tp,aux.Stringid(id,1))
 	else
-		local a = Duel.SelectOption(tp,aux.Stringid(id,3))
+		local a = Duel.SelectOption(tp,aux.Stringid(id,0))
 	end
 	 local g=goods:Select(tp,1,1,nil)
-	if g:GetFirst():IsCode(101223247) then
+	if g:GetFirst():IsCode(130000036) then
 		s.purchase(tp,false)
 	else
 		if g:GetCount()>0 then

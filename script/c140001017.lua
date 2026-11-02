@@ -1,27 +1,27 @@
 --다크라이트 라이브러리언
 local s,id=GetID()
 function s.initial_effect(c)
---싱크로 소환
-aux.AddSynchroProcedure(c,nil,nil,1)
-c:EnableReviveLimit()
---①: 자신 필드의 몬스터 공격력 400 상승
-local e1=Effect.CreateEffect(c)
-e1:SetType(EFFECT_TYPE_FIELD)
-e1:SetCode(EFFECT_UPDATE_ATTACK)
-e1:SetRange(LOCATION_MZONE)
-e1:SetTargetRange(LOCATION_MZONE,0)
-e1:SetValue(400)
-c:RegisterEffect(e1)
---②: 전투 / 효과로 필드에서 묘지로 보내졌을 경우, 이 턴에 묘지로 보내진 마법 카드 1장 회수
-local e2=Effect.CreateEffect(c)
-e2:SetCategory(CATEGORY_TOHAND)
-e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
-e2:SetCode(EVENT_TO_GRAVE)
-e2:SetCondition(s.thcon)
-e2:SetTarget(s.thtg)
-e2:SetOperation(s.thop)
-c:RegisterEffect(e2)
+	--싱크로 소환
+	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
+	c:EnableReviveLimit()
+	--①: 자신 필드의 몬스터 공격력 400 상승
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetTargetRange(LOCATION_MZONE,0)
+	e1:SetValue(400)
+	c:RegisterEffect(e1)
+	--②: 전투 / 효과로 필드에서 묘지로 보내졌을 경우, 이 턴에 묘지로 보내진 마법 카드 1장 회수
+	local e2=Effect.CreateEffect(c)
+	e2:SetCategory(CATEGORY_TOHAND)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
+	e2:SetCode(EVENT_TO_GRAVE)
+	e2:SetCondition(s.thcon)
+	e2:SetTarget(s.thtg)
+	e2:SetOperation(s.thop)
+	c:RegisterEffect(e2)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 local c=e:GetHandler()

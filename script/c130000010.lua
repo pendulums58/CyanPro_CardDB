@@ -2,6 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	Fusion.AddProcMix(c,true,true,s.ffilter,s.ffilter1)
+	c:EnableReviveLimit()
 	--융합 처리중 모든 카드군 소속
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
