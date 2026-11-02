@@ -27,7 +27,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.cfilter(c,tp)
 	return c:IsType(TYPE_MONSTER) and (c:IsAttack(1400) or c:IsDefense(1400)) and c:IsAbleToRemoveAsCost()
-		and Duel.GetLocationCount(tp,LOCATION_MZONE,c)>0
+		and Duel.GetLocationCount(tp,c)>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
@@ -40,8 +40,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_GRAVE,0,3,nil) end
-	local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_GRAVE,0,3,3,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_GRAVE,0,2,nil) end
+	local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_GRAVE,0,2,2,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
@@ -60,8 +60,8 @@ function s.purchase(tp,chk)
 	local uncommon={130000005,130000025,130100001}
 	
 	-- 레어 등급 카드
-	-- 영원의 빛 조각, 
-	local rare={130000037}
+	-- 영원의 빛 조각, 거성의 분노, 수도
+	local rare={130000037,130000038,130000039}
 	-- 커먼 확률 60%, 언커먼 확률 30%, 레어 확률 10%
 	local goods=Group.CreateGroup()
 	local rarity=0
@@ -102,11 +102,11 @@ function s.purchase(tp,chk)
 		goods:AddCard(reroll)
 	end
 	if maxrare == 3 then
-		local a = Duel.SelectOption(tp,aux.Stringid(id,0))
+		local a = Duel.SelectOption(tp,aux.Stringid(id,3))
 	elseif maxrare == 2 then
 		local a = Duel.SelectOption(tp,aux.Stringid(id,1))
 	else
-		local a = Duel.SelectOption(tp,aux.Stringid(id,3))
+		local a = Duel.SelectOption(tp,aux.Stringid(id,0))
 	end
 	 local g=goods:Select(tp,1,1,nil)
 	if g:GetFirst():IsCode(130000036) then
