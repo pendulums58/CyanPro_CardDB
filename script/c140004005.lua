@@ -27,7 +27,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 			local token=Duel.CreateToken(tp,140004003)
 			Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 		else
-			Duel.PlaceFieldSpell(sc:GetFirst(),tp)
+			Duel.PlaceFieldSpell(sc,tp)
 		end	
 	end
 end

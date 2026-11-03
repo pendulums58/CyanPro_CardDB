@@ -19,7 +19,7 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.Destroyt(tc,REASON_EFFECT)~=0
+	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_MZONE,1,1,nil)
 		Duel.Destroy(g,REASON_EFFECT)
