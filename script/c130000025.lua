@@ -76,7 +76,7 @@ function s.valcon(e,re,r,rp)
 	return bit.band(r,REASON_BATTLE+REASON_EFFECT)~=0
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:GetCount()==1 and eg:GetFirst():GetPreviousControler()==tp and eg:GetFirst():IsPreviousLocation(LOCATION_MZONE) and eg:IsLocation(LOCATION_GRAVE)
+	return eg:GetCount()==1 and eg:GetFirst():GetPreviousControler()==tp and eg:GetFirst():IsPreviousLocation(LOCATION_MZONE) and eg:GetFirst():IsLocation(LOCATION_GRAVE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst()
