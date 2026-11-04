@@ -31,7 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetOperation(s.rcop)
 	Duel.RegisterEffect(e2,tp)
-	Duel.Delete()
+	Duel.Exile(c,REASON_EFFECT)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil,REASON_EFFECT) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
