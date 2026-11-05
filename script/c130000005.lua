@@ -32,7 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetAttacker()
-	if tg:IsAttackable() and not tg:IsStatus(STATUS_ATTACK_CANCELED) then
+	if tg:IsRelateToBattle() and not tg:IsStatus(STATUS_ATTACK_CANCELED) then
 		Duel.SendtoHand(tg,nil,REASON_EFFECT)
 	end
 end
