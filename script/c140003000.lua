@@ -40,15 +40,15 @@ function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x301) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=5 end
+	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=3 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 	Duel.Announce("도와줘 "..(s.helpers[id] or "몬스터").."가 도움을 요청했다!")
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=nil
-	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=5 then
-		Duel.ConfirmDecktop(tp,5)
-		local g=Duel.GetDecktopGroup(tp,5)
+	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=3 then
+		Duel.ConfirmDecktop(tp,3)
+		local g=Duel.GetDecktopGroup(tp,3)
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and g:IsExists(s.spfilter,1,nil,e,tp) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg=g:FilterSelect(tp,s.spfilter,1,1,nil,e,tp)
