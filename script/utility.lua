@@ -2833,7 +2833,28 @@ function Auxiliary.GetMMZonesPointedTo(player,by_filter,player_location,oppo_loc
 	target_player=target_player==nil and player or target_player
 	return Duel.GetMatchingGroup(link_card_filter,player,loc1,loc2,nil,by_filter,...):GetLinkedZone(target_player)&ZONES_MMZ
 end
-
+function Duel.PlaceFieldSpell(c,tp,target_p)
+	if not target_p then target_p=tp end
+	local fc=Duel.GetFieldCard(target_p,LOCATION_FZONE,0)
+	if Duel.IsDuelType(DUEL_1_FIELD) then
+		if fc then Duel.Destroy(fc,REASON_RULE) end
+	else
+		if fc and Duel.SendtoGrave(fc,REASON_RULE)==0 then
+			Duel.SendtoGrave(c,REASON_RULE)
+			return false
+		end
+	end
+	Duel.BreakEffect()
+	local res=Duel.MoveToField(c,tp,target_p,LOCATION_FZONE,POS_FACEUP,true)
+	if res and Duel.IsDuelType(DUEL_1_FIELD) then
+		fc=Duel.GetFieldCard(1-target_p,LOCATION_FZONE,0)
+		if fc and Duel.Destroy(fc,REASON_RULE)==0 then
+			Duel.SendtoGrave(c,REASON_RULE)
+			return false
+		end
+	end
+	return res
+end
 --[[
 	Performs an operation to a card(s) each time a given phase is entered.
 	Returns the effect that would perform the operation, or nil if no card/group or an empty group is passed.
