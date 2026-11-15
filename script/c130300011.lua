@@ -36,7 +36,7 @@ end
 function s.cfilter(c)
 	return c:IsPreviousLocation(LOCATION_ONFIELD)
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
+function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
