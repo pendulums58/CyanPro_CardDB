@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--엑시즈 소환
-	aux.AddXyzProcedure(c,nil,4,2,nil,nil,99)
+	Xyz.AddProcedure(c,nil,4,2,nil,nil,Xyz.InfiniteMats)
 	c:EnableReviveLimit()
 	--소재 제거(효과 대상)
 	local e1=Effect.CreateEffect(c)
