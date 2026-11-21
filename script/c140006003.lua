@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--펜듈럼 소환
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--P①: 자신 필드에 "스토리텔러" 엑시즈 몬스터가 존재할 경우 필드의 몬스터 1장의 공격력 1000 상승
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

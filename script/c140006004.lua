@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--펜듈럼 소환
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--P①: 자신 필드에 "스토리텔러" 엑시즈 몬스터가 존재할 경우 펜듈럼 존 이외의 마법 / 함정 1장 바운스
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
